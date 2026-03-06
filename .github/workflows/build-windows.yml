@@ -22,13 +22,11 @@ jobs:
       - name: Install Pake CLI
         run: pnpm add -g pake-cli
 
+      - name: Check Pake version
+        run: pake --version
+
       - name: Build ChatWay
-        run: |
-          pake https://go.chatway.app \
-          --name ChatWay \
-          --width 1440 \
-          --height 900 \
-          --targets x64
+        run: pake https://go.chatway.app --name ChatWay --width 1440 --height 900 --targets x64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
