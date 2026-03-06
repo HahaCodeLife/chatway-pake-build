@@ -21,14 +21,22 @@ jobs:
         with:
           version: 10
 
-      - name: Enable pnpm build scripts
-        run: pnpm config set ignore-scripts false
+      - name: Configure pnpm
+        run: |
+          pnpm config set ignore-scripts false
+          pnpm config set enable-pre-post-scripts true
 
-      - name: Check pnpm
-        run: pnpm --version
+      - name: Check environment
+        run: |
+          node -v
+          npm -v
+          pnpm -v
 
       - name: Build ChatWay
-        run: pnpm dlx pake-cli https://go.chatway.app --name ChatWay --width 1440 --height 900 --targets x64
+        env:
+          npm_config_ignore_scripts: "false"
+          PNPM_IGNORE_SCRIPTS: "false"
+        run: npx pake-cli https://go.chatway.app --name ChatWay --width 1440 --height 900 --targets x64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
