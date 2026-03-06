@@ -21,6 +21,9 @@ jobs:
         with:
           version: 10
 
+      - name: Enable pnpm build scripts
+        run: pnpm config set ignore-scripts false
+
       - name: Check pnpm
         run: pnpm --version
 
