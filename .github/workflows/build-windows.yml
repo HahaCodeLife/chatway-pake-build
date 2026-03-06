@@ -1,0 +1,39 @@
+name: Build ChatWay Windows x64
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install Pake CLI
+        run: pnpm add -g pake-cli
+
+      - name: Build ChatWay
+        run: |
+          pake https://go.chatway.app \
+          --name ChatWay \
+          --width 1440 \
+          --height 900 \
+          --targets x64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatway-windows-x64
+          path: |
+            **/*.exe
+            **/*.msi
